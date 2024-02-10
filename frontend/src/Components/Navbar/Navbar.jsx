@@ -53,6 +53,15 @@ const Navbar = () => {
             Contact
           </Link>
         </li>
+        <li className="navbar__item">
+          <Link
+            to="/locate"
+            className="navbar__link"
+            onClick={() => setMenuOpen(false)}
+          >
+            Locate
+          </Link>
+        </li>
       </ul>
       <div className="menu-icon" onClick={toggleMenu}>
         {menuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}

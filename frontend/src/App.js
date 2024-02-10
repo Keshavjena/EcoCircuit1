@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer'; 
-import { Header, Login, Register, Blogs, Contact, About} from './Containers'
+import { Header, Login, Register, Blogs, Contact, About, Locate} from './Containers'
 
 
 
@@ -19,6 +19,7 @@ const App = () => {
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/about" element={<About/>} />
+        <Route path="/locate" element={<Locate/>} />
       </Routes>
       <Footer/>
     </div>

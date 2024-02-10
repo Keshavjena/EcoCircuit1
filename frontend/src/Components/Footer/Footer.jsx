@@ -34,6 +34,11 @@ const Footer = () => {
                 Contact
               </Link>
             </li>
+            <li className="footer__item">
+              <Link to="/locate" className="footer__link">
+                Locate
+              </Link>
+            </li>
           </ul>
         </div>
 
