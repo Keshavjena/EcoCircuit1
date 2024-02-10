@@ -11,19 +11,19 @@ import { Header, Login, Register, Blogs, Contact, About, Locate} from './Contain
 const App = () => {
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Header />} />
-        <Route path="/login" element={<Login/>} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/contact" element={<Contact/>} />
         <Route path="/about" element={<About/>} />
         <Route path="/locate" element={<Locate/>} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
-}
+};
 
 export default App;
