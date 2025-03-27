@@ -1,13 +1,21 @@
-const express = require("express");
+import express from "express"
 const router = express.Router();
-const User = require("../models/User");
-const Contact = require("../models/Contact");
+import mongoose from "mongoose"
+import { Router } from "express";
+import  cors from "cors"
+import * as dotenv from "dotenv"
+import { userModel ,contactModel} from "../models/db.js";
+
+dotenv.config()
+
+// console.log(process.env.SECRET_KEY)
+const databaseurl = process.env.DATABASE_URL 
 
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username, password });
+    const user = await userModel.findOne({ email, password });
 
     if (user) {
       res.json({ success: true, message: "Login successful" });
@@ -21,23 +29,19 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { name, username, password, confirmPassword } = req.body;
+  const { firstName, email, password } = req.body;
 
   try {
-    if (password !== confirmPassword) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Passwords do not match" });
-    }
 
-    const existingUser = await User.findOne({ username });
+
+    const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res
         .status(400)
         .json({ success: false, message: "Username already taken" });
     }
 
-    const newUser = new User({ name, username, password });
+    const newUser = new userModel({ email, firstName, password });
     await newUser.save();
 
     res.json({ success: true, message: "Registration successful" });
@@ -60,4 +64,4 @@ router.post("/contact", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
