@@ -84,18 +84,62 @@ if(!Parsebodywithsucess){
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-  try {
-    const user = await userModel.findOne({ email, password });
-
-    if (user) {
-      res.json({ success: true, message: "Login successful" });
-    } else {
-      res.status(401).json({ success: false, message: "Invalid credentials" });
-    }
-  } catch (error) {
-    console.error("Error during login", error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+ 
+  if (!email || !password) {
+    return res.status(400).json({
+      message: "Email and password are required",
+      error: true
+    });
   }
+  
+  try {
+   
+    const user = await userModel.findOne({ email: email });
+    
+   
+    if (!user) {
+      return res.status(400).json({
+        message: "Incorrect Email",
+        error: true
+      });
+    }
+    
+   
+    const validPassword = await bcrypt.compare(password, user.password);
+    
+    if (!validPassword) {
+      return res.status(400).json({
+        message: "Incorrect password",
+        error: true
+      });
+    }
+    
+
+    res.json({
+      message: "User logged in successfully",
+      success: true
+    });
+    
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Server error",
+      error: true
+    });
+  }
+
+  // try {
+  //   const user = await userModel.findOne({ email, password });
+
+  //   if (user) {
+  //     res.json({ success: true, message: "Login successful" });
+  //   } else {
+  //     res.status(401).json({ success: false, message: "Invalid credentials" });
+  //   }
+  // } catch (error) {
+  //   console.error("Error during login", error);
+  //   res.status(500).json({ success: false, message: "Internal server error" });
+  // }
 });
 
 
